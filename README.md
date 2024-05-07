@@ -25,9 +25,7 @@ wget -qO- https://dl-cdn.alpinelinux.org/alpine/v3.19/releases/"${arch}"/alpine-
 ```
 # Create an overlay filesystem
 sudo mount -t overlay \
-  -o lowerdir=image, \
-     upperdir=c1_container, \
-     workdir=c1_work \
+  -o lowerdir=image,upperdir=c1_container,workdir=c1_work \
      overlay container1
 ```
 
@@ -111,8 +109,8 @@ cat BBB
 
 ```
 # Add a group and user:
-groupadd -g 12345 jotb_g
-useradd -g 12345 -u 54321 jotb_u
+addgroup -g 12345 jotb_g
+adduser -H -S -u 54321 jotb_u -G jotb_g
 ```
 
 # Containers are Magic!
@@ -125,9 +123,7 @@ cd ~/jotb
 ```
 # Create a second overlay filesystem
 sudo mount -t overlay \
-  -o lowerdir=image, \
-     upperdir=c2_container, \
-     workdir=c2_work \
+  -o lowerdir=image,upperdir=c2_container,workdir=c2_work \
      overlay container2
 ```
 
@@ -180,6 +176,11 @@ unshare --fork --uts --pid --mount \
 ```
 # Container Properties
 ```
+# Exit the container
+exit
+```
+
+```
 # "Drop" the container:
 sudo umount container2
 rm -fr ~/jotb/container2
@@ -200,9 +201,7 @@ cd ~/jotb
 ```
 # Create an overlay filesystem
 sudo mount -t overlay \
-  -o lowerdir=container1, \
-     upperdir=c3_container, \
-     workdir=c3_work \
+  -o lowerdir=container1,upperdir=c3_container,workdir=c3_work \
      overlay container3
 ```
 
@@ -224,5 +223,6 @@ unshare --fork --uts --pid --mount \
 # Cleanup
 sudo umount container3
 sudo umount container1
+cd ~
 rm -fr ~/jotb
 ```
