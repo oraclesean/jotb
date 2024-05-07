@@ -108,6 +108,13 @@ ls -l /
 cat AAA
 cat BBB
 ```
+
+```
+# Add a group and user:
+groupadd -g 12345 jotb_g
+useradd -g 12345 -u 54321 jotb_u
+```
+
 # Containers are Magic!
 ```
 # Prepare directories for a second container
